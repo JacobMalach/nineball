@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const Entry = props => (
   <tr>
     <td>{props.entry.games}</td>
+    <td>
+      <Link to={"/view/" + props.entry._id}>View</Link>
+    </td>
   </tr>
 )
 
@@ -29,8 +33,8 @@ export default class EntryList extends Component {
   }
 
   entryList() {
-    return this.state.entries.map(entry => {
-      return <p>{entry.games.join(", ")}</p>;
+    return this.state.entries.map(currentEntry => {
+      return <Entry entry={currentEntry} key={currentEntry._id}/>;
     })
   }
 

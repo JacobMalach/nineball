@@ -4,7 +4,8 @@ import { Route, Routes } from "react-router-dom";
 
 import Navbar from "./components/navbar";
 import EntryList from "./components/entryList";
-import Create from "./components/create";
+import { Create } from "./components/create";
+import { View } from "./components/viewEntry";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
       <Routes>
         <Route exact path="/" element={<EntryList />} />
         <Route path="/create" element={<Create />} />
+        <Route path="/view/:id" element={<View />} />
       </Routes>
       </div>
     </div>
