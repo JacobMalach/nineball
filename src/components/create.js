@@ -7,8 +7,9 @@ export function Create(props) {
 
   const[games, setGames] = useState([]);
   const[image, setImage] = useState([]);
+  const[cords, setCords] = useState([0, 0]);
   const canvasRef = useRef(null);
-  const fileRef = useRef(null)
+  const fileRef = useRef(null);
 
   useEffect(() => {
     drawImage();
@@ -20,7 +21,8 @@ export function Create(props) {
     const imgSrc = image;
     var img = new Image();
     img.onload = () => {
-      ctx.drawImage(img, 0, 0);
+      ctx.clearRect(cords[0], cords[1], 210, 210)
+      ctx.drawImage(img, cords[0], cords[1], 210, 210);
     }
     img.src = imgSrc;
   }
@@ -46,8 +48,21 @@ export function Create(props) {
     setGames(lst);
   }
 
-  const canvasClick = () => {
+  const canvasClick = (e) => {
+    let x = e.clientX;
+    let y = e.clientY;
+    setCords(cordHelper(x, y));
     fileRef.current.click()
+  }
+
+  const cordHelper = (x, y) => {
+    const canvas = canvasRef.current;
+    let rect = canvas.getBoundingClientRect();
+    x = x - rect.left;
+    y = y - rect.top;
+    x = Math.floor(x/210) * 210;
+    y = Math.floor(y/210) * 210;
+    return [x, y]
   }
 
   const convertImage = (e) => {
@@ -69,11 +84,11 @@ export function Create(props) {
     console.log(entry);
 
     axios.post('http://localhost:5000/entry/add', entry)
-      .then(res => console.log(res.data));
+        .then(res => console.log(res.data));
 
     window.location = '/';
+    
   }
-
 
   return (
     <div>
@@ -87,6 +102,7 @@ export function Create(props) {
           </form>
         </div>
         <div class="col-md">
+          <p>Click to Upload Images</p>
           <canvas 
           ref={canvasRef}
           onClick={canvasClick}

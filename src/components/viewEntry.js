@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { EntryBox } from './entryBox';
-import { EnteredItem } from './enteredItem';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
