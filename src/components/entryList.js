@@ -6,7 +6,9 @@ const Entry = props => (
   <tr>
     <td>{props.entry.games}</td>
     <td>
-      <Link to={"/view/" + props.entry._id}>View</Link>
+      <Link to={"/view/" + props.entry._id}>
+        <img src={props.entry.image} width="200" height="200"></img>
+      </Link>
     </td>
   </tr>
 )

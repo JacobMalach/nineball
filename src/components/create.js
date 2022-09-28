@@ -44,7 +44,7 @@ export function Create(props) {
 
   const removeGame = (game) => {
     var lst = games;
-    lst = lst.filter(x => x != game);
+    lst = lst.filter(x => x !== game);
     setGames(lst);
   }
 
@@ -77,8 +77,10 @@ export function Create(props) {
   const onSubmit = (e) => {
     e.preventDefault();
 
+    var i = canvasRef.current.toDataURL();
     const entry = {
-      games: games
+      games: games,
+      image: i,
     }
 
     console.log(entry);

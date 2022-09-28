@@ -15,8 +15,12 @@ entryRouter.route('/:id').get((req, res) => {
 
 entryRouter.route('/add').post((req, res) => {
   const games = req.body.games;
+  const image = req.body.image;
 
-  const newEntry = new Entry({games});
+  const newEntry = new Entry({
+    games,
+    image
+  });
 
   newEntry.save()
     .then(() => res.json('User added!'))
