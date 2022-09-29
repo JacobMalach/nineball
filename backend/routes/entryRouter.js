@@ -1,8 +1,11 @@
 const entryRouter = require('express').Router();
 let Entry = require('../models/entry');
 
-entryRouter.route('/').get((req, res) => {
+entryRouter.route('/:skip').get((req, res) => {
+  var skip = parseInt(req.params.skip);
   Entry.find()
+    .limit(9)
+    .skip(skip)
     .then(entries => res.json(entries))
     .catch(err => res.status(400).json('Error: ' + err));
 });

@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const Entry = props => (
-  <tr>
-    <td>{props.entry.games}</td>
-    <td>
-      <Link to={"/view/" + props.entry._id}>
-        <img src={props.entry.image} width="200" height="200"></img>
-      </Link>
-    </td>
-  </tr>
+  <div>
+    <Link to={"/view/" + props.entry._id}>
+      <img src={props.entry.image} width="400" height="400"></img>
+    </Link>
+  </div>
 )
 
 export default class EntryList extends Component {
@@ -18,20 +16,30 @@ export default class EntryList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      entries: []
+      entries: [],
+      loaded: false,
+      skip: 0
     };
+
+    this.getEntries = this.getEntries.bind(this)
   }
 
   componentDidMount() {
     
-    axios.get('http://localhost:5000/entry/')
+    this.getEntries()
+      
+  }
+
+  getEntries() {
+    axios.get('http://localhost:5000/entry/' + this.state.skip)
       .then(response => {
-        this.setState({ entries: response.data })
+        this.setState({ entries: [...this.state.entries, ...response.data], loaded: true, skip: this.state.skip + 9 })
       })
       .catch((error) => {
         console.log(error);
       })
-      
+
+      console.log(this.state.skip)
   }
 
   entryList() {
@@ -40,12 +48,21 @@ export default class EntryList extends Component {
     })
   }
 
-
   render() {
     return (
-      <div>
-        <h3>Entry List</h3>
-        {this.entryList()}
+      <div class="container">
+        <InfiniteScroll
+          dataLength={this.state.entries}
+          next={() => this.getEntries()}
+          hasMore={true}
+          loader={
+            <p>loading</p>
+          }
+          >
+            <div>
+              {this.state.loaded ? this.entryList() : ""}
+            </div>
+        </InfiniteScroll>
       </div>
     )
   }
