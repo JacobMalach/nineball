@@ -6,7 +6,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 const Entry = props => (
   <div>
     <Link to={"/view/" + props.entry._id}>
-      <img src={props.entry.image} width="400" height="400"></img>
+      <img src={props.entry.image} width="400" height="400" class="mt-5  border border-3 border-dark"></img>
     </Link>
   </div>
 )
@@ -25,15 +25,15 @@ export default class EntryList extends Component {
   }
 
   componentDidMount() {
-    
+
     this.getEntries()
-      
+
   }
 
   getEntries() {
     axios.get('http://localhost:5000/entry/' + this.state.skip)
       .then(response => {
-        this.setState({ entries: [...this.state.entries, ...response.data], loaded: true, skip: this.state.skip + 9 })
+        this.setState({ entries: [...this.state.entries, ...response.data], loaded: true, skip: this.state.skip + 6 })
       })
       .catch((error) => {
         console.log(error);
@@ -43,9 +43,13 @@ export default class EntryList extends Component {
   }
 
   entryList() {
-    return this.state.entries.map(currentEntry => {
-      return <Entry entry={currentEntry} key={currentEntry._id}/>;
-    })
+    return <div class="container">
+      <div class="row"> 
+        {this.state.entries.map(currentEntry => {
+          return <div class="col"><Entry entry={currentEntry} key={currentEntry._id}/></div>;
+        })}
+      </div>
+    </div> 
   }
 
   render() {
@@ -59,7 +63,7 @@ export default class EntryList extends Component {
             <p>loading</p>
           }
           >
-            <div>
+            <div class="text-center">
               {this.state.loaded ? this.entryList() : ""}
             </div>
         </InfiniteScroll>

@@ -8,7 +8,7 @@ export function View(props) {
     const params = useParams();
 
     useEffect(() => {
-        axios.get('http://localhost:5000/entry/' + params.id)
+        axios.get('http://localhost:5000/entry/view/' + params.id)
           .then(response => {
             setGames(response.data.games)
             setImage(response.data.image)

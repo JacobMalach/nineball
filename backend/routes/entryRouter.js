@@ -4,13 +4,13 @@ let Entry = require('../models/entry');
 entryRouter.route('/:skip').get((req, res) => {
   var skip = parseInt(req.params.skip);
   Entry.find()
-    .limit(9)
+    .limit(6)
     .skip(skip)
     .then(entries => res.json(entries))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-entryRouter.route('/:id').get((req, res) => {
+entryRouter.route('/view/:id').get((req, res) => {
     Entry.findById(req.params.id)
       .then(entry => res.json(entry))
       .catch(err => res.status(400).json('Error: ' + err));
