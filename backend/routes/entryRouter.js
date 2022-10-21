@@ -10,6 +10,16 @@ entryRouter.route('/:skip').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+entryRouter.route('/search/:skip/:tags').get((req, res) => {
+  var skip = parseInt(req.params.skip);
+  var tags = req.params.tags.replaceAll('_', ' ');
+  Entry.find( {games: tags} )
+    .limit(6)
+    .skip(skip)
+    .then(entries => res.json(entries))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
 entryRouter.route('/view/:id').get((req, res) => {
     Entry.findById(req.params.id)
       .then(entry => res.json(entry))

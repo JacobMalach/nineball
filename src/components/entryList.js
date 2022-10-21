@@ -31,7 +31,9 @@ export default class EntryList extends Component {
   }
 
   getEntries() {
-    axios.get('http://localhost:5000/entry/' + this.state.skip)
+
+    if (this.props.tags !== "null") {
+      axios.get('http://localhost:5000/entry/search/' + this.state.skip + '/' + this.props.tags)
       .then(response => {
         this.setState({ entries: [...this.state.entries, ...response.data], loaded: true, skip: this.state.skip + 6 })
       })
@@ -39,7 +41,18 @@ export default class EntryList extends Component {
         console.log(error);
       })
 
+    console.log(this.state.skip)
+    } else {
+      axios.get('http://localhost:5000/entry/' + this.state.skip)
+        .then(response => {
+          this.setState({ entries: [...this.state.entries, ...response.data], loaded: true, skip: this.state.skip + 6 })
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+
       console.log(this.state.skip)
+    }
   }
 
   entryList() {
@@ -63,9 +76,9 @@ export default class EntryList extends Component {
             <p>loading</p>
           }
           >
-            <div class="text-center">
-              {this.state.loaded ? this.entryList() : ""}
-            </div>
+          <div class="text-center">
+            {this.state.loaded ? this.entryList() : ""}
+          </div>
         </InfiniteScroll>
       </div>
     )
