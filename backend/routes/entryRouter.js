@@ -13,7 +13,8 @@ entryRouter.route('/:skip').get((req, res) => {
 entryRouter.route('/search/:skip/:tags').get((req, res) => {
   var skip = parseInt(req.params.skip);
   var tags = req.params.tags.replaceAll('_', ' ');
-  Entry.find( {games: tags} )
+  tags = tags.split("+");
+  Entry.find( {games: { $all : tags }} )
     .limit(6)
     .skip(skip)
     .then(entries => res.json(entries))

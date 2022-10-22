@@ -5,7 +5,7 @@ import axios from 'axios';
 
 export function Create(props) {
 
-  const[games, setGames] = useState([]);
+  const[tags, setTags] = useState([]);
   const[image, setImage] = useState([]);
   const[cords, setCords] = useState([0, 0]);
   const canvasRef = useRef(null);
@@ -38,14 +38,14 @@ export function Create(props) {
     return ctx;
   }
 
-  const newGame = (game) => {
-    setGames(games.concat([game]));
+  const newTag = (tag) => {
+    setTags(tags.concat([tag]));
   }
 
-  const removeGame = (game) => {
-    var lst = games;
-    lst = lst.filter(x => x !== game);
-    setGames(lst);
+  const removeTag = (tag) => {
+    var lst = tags;
+    lst = lst.filter(x => x !== tag);
+    setTags(lst);
   }
 
   const canvasClick = (e) => {
@@ -79,7 +79,7 @@ export function Create(props) {
 
     var i = canvasRef.current.toDataURL();
     const entry = {
-      games: games,
+      games: tags,
       image: i,
     }
 
@@ -97,8 +97,8 @@ export function Create(props) {
       <div class="row text-center">
         <div class="col-sm">
           <h3>Create New Entry</h3>
-          <EntryBox onClick={newGame}/>
-          {games.map(game => <EnteredItem item={game} onClick={removeGame}/>)}
+          <EntryBox onClick={newTag}/>
+          {tags.map(tag => <EnteredItem item={tag} onClick={removeTag}/>)}
           <form onSubmit={(e) => {onSubmit(e)}}>
             <input type="submit" value="Create Nineball" className="btn btn-primary" />
           </form>

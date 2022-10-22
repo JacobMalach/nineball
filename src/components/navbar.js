@@ -18,7 +18,7 @@ export default function Navbar(props) {
             </NavLink>
           </div>
           <div class="col-md-4 offset-md-1">
-            <input type="text" class="form-control align right" onChange={(e) => setTags(e.target.value.replaceAll(' ', '_'))} placeholder="Search"/>
+            <input type="text" class="form-control align right" onChange={(e) => setTags(e.target.value)} placeholder="Search"/>
           </div>
           <div class="col-sm-2">
             <NavLink className="nav-link" to={"/search/" + tags.replaceAll(', ', '+').replaceAll(' ', '_')}>

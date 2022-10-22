@@ -5,7 +5,7 @@ export class EntryBox extends React.Component {
     super(props);
 
     this.state = {
-      game: ""
+      tag: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -13,29 +13,29 @@ export class EntryBox extends React.Component {
   }
     
   handleChange(e) {
-    const g = e.target.value;
+    const t = e.target.value;
     this.setState({
-        game: g
+        tag: t
     })
   }
 
   handleClick() {
-    const game = this.state.game;
-    this.props.onClick(game);
+    const tag = this.state.tag;
+    this.props.onClick(tag);
     this.setState({
-        game: ""
+        tag: ""
     })
   }
 
   render() {
     return (
       <div>
-        <h4>Enter Game: </h4>
+        <h4>Enter Tag: </h4>
         <input 
         onChange={this.handleChange} 
         type="text"
-        value={this.state.game} />
-        <button onClick={this.handleClick}>Add Game</button>
+        value={this.state.tag} />
+        <button onClick={this.handleClick}>Add Tag</button>
       </div>
     );
   }
