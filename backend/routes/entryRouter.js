@@ -5,6 +5,7 @@ entryRouter.route('/:skip').get((req, res) => {
   var skip = parseInt(req.params.skip);
   Entry.find()
     .limit(6)
+    .sort({createdAt: -1})
     .skip(skip)
     .then(entries => res.json(entries))
     .catch(err => res.status(400).json('Error: ' + err));
@@ -16,6 +17,7 @@ entryRouter.route('/search/:skip/:tags').get((req, res) => {
   tags = tags.split("+");
   Entry.find( {games: { $all : tags }} )
     .limit(6)
+    .sort({createdAt: -1})
     .skip(skip)
     .then(entries => res.json(entries))
     .catch(err => res.status(400).json('Error: ' + err));

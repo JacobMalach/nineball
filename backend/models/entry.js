@@ -6,10 +6,12 @@ const entrySchema = new Schema({
   games: {
     type: [String],
     required: true,
-  },
-  image: {
+  }, image: {
     type: String,
+    required: true,
   },
+}, {
+  timestamps: true,
 });
 
 module.exports = mongoose.model('Entry', entrySchema);
