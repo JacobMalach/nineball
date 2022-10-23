@@ -8,14 +8,24 @@ export function Create(props) {
   const[tags, setTags] = useState([]);
   const[image, setImage] = useState([]);
   const[cords, setCords] = useState([0, 0]);
+  const[filled, setFilled] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0]);
+  const isMounted = useRef(false);
   const canvasRef = useRef(null);
   const fileRef = useRef(null);
 
   useEffect(() => {
-    drawImage();
+    if(isMounted.current) {
+      drawImage();
+    } else {
+      isMounted.current = true;
+    }
   }, [image])
 
   const drawImage = () => {
+    var f = [...filled];
+    var i = Math.floor(cords[0]/210) + Math.floor(cords[1]/210) * 3;
+    f[i] = 1;
+    setFilled(f);
 
     const ctx = prepCanvas();
     const imgSrc = image;
@@ -25,6 +35,7 @@ export function Create(props) {
       ctx.drawImage(img, cords[0], cords[1], 210, 210);
     }
     img.src = imgSrc;
+
   }
 
   const prepCanvas = () => {
@@ -77,19 +88,20 @@ export function Create(props) {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    var i = canvasRef.current.toDataURL();
-    const entry = {
-      games: tags,
-      image: i,
+    if(!filled.includes(0)) {
+      var i = canvasRef.current.toDataURL();
+      const entry = {
+        games: tags,
+        image: i,
+      }
+
+      console.log(entry);
+
+      axios.post('http://localhost:5000/entry/add', entry)
+          .then(res => console.log(res.data));
+
+      window.location = '/';
     }
-
-    console.log(entry);
-
-    axios.post('http://localhost:5000/entry/add', entry)
-        .then(res => console.log(res.data));
-
-    window.location = '/';
-    
   }
 
   return (
@@ -104,7 +116,7 @@ export function Create(props) {
           </form>
         </div>
         <div class="col-md">
-          <p>Click to Upload Images</p>
+          <p>Click to Upload Nine Images</p>
           <canvas 
           ref={canvasRef}
           onClick={canvasClick}
