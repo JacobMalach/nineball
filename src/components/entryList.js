@@ -33,7 +33,7 @@ export default class EntryList extends Component {
   getEntries() {
 
     if (this.props.tags !== "null") {
-      axios.get('https://backend-production-fc5e.up.railway.app/entry/search/' + this.state.skip + '/' + this.props.tags)
+      axios.get('http://localhost:5000/entry/search/' + this.state.skip + '/' + this.props.tags)
       .then(response => {
         this.setState({ entries: [...this.state.entries, ...response.data], loaded: true, skip: this.state.skip + 6 })
       })
