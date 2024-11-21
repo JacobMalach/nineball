@@ -43,7 +43,6 @@ export default class EntryList extends Component {
 
     console.log(this.state.skip)
     } else {
-      console.log(process.env.REACT_APP_API_URL + '/' + this.state.skip)
       axios.get(process.env.REACT_APP_API_URL + '/' + this.state.skip)
         .then(response => {
           this.setState({ entries: [...this.state.entries, ...response.data], loaded: true, skip: this.state.skip + 6 })
