@@ -33,7 +33,7 @@ export default class EntryList extends Component {
   getEntries() {
 
     if (this.props.tags !== "null") {
-      axios.get('http://localhost:5000/entry/search/' + this.state.skip + '/' + this.props.tags)
+      axios.get(process.env.REACT_APP_API_URL + '/entry/search/' + this.state.skip + '/' + this.props.tags)
       .then(response => {
         this.setState({ entries: [...this.state.entries, ...response.data], loaded: true, skip: this.state.skip + 6 })
       })
@@ -43,7 +43,8 @@ export default class EntryList extends Component {
 
     console.log(this.state.skip)
     } else {
-      axios.get('http://localhost:5000/entry/' + this.state.skip)
+      console.log(process.env.REACT_APP_API_URL + '/' + this.state.skip)
+      axios.get(process.env.REACT_APP_API_URL + '/' + this.state.skip)
         .then(response => {
           this.setState({ entries: [...this.state.entries, ...response.data], loaded: true, skip: this.state.skip + 6 })
         })

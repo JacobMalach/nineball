@@ -97,7 +97,7 @@ export function Create(props) {
 
       console.log(entry);
 
-      axios.post('http://localhost:5000/entry/add', entry)
+      axios.post(process.env.REACT_APP_API_URL + '/entry/add', entry)
           .then(res => console.log(res.data));
 
       window.location = '/';
