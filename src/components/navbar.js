@@ -9,9 +9,9 @@ export default function Navbar(props) {
   const[tags, setTags] = useState("");
 
   return (
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar navbar-expand-lg navbar-light bg-light w-100">
           <div class="col-sm-3 text-center">
             <NavLink className="nav-link" to="/">
               Home
