@@ -85,24 +85,30 @@ export function Create(props) {
     reader.readAsDataURL(file);
 }
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+const onSubmit = async (e) => {
+  e.preventDefault();
 
-    if(!filled.includes(0)) {
-      var i = canvasRef.current.toDataURL();
-      const entry = {
-        games: tags,
-        image: i,
-      }
+  if (!filled.includes(0)) {
+    var i = canvasRef.current.toDataURL();
+    const entry = {
+      games: tags,
+      image: i,
+    };
 
-      console.log(entry);
+    console.log(entry);
 
-      axios.post(process.env.REACT_APP_API_URL + '/entry/add', entry)
-          .then(res => console.log(res.data));
-
+    try {
+      // Wait for the POST request to complete
+      const response = await axios.post(process.env.REACT_APP_API_URL + '/entry/add', entry);
+      console.log(response.data);
+      
+      // Only redirect if the POST request is successful
       window.location = '/';
+    } catch (error) {
+      console.log('Error submitting the form:', error);
     }
   }
+};
 
   return (
     <div>
