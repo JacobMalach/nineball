@@ -8,7 +8,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://your-backend-url.onrender.com'], 
+  origin: ['http://localhost:3000', 'https://your-backend-url.onrender.com', 'https://nineball.vercel.app/'], 
 }));
 app.use(express.json({limit: '25mb'}));
 
