@@ -8,6 +8,7 @@ export function View(props) {
     const params = useParams();
 
     useEffect(() => {
+        console.log(process.env.REACT_APP_API_URL + '/entry/view/' + params.id)
         axios.get(process.env.REACT_APP_API_URL + '/entry/view/' + params.id)
           .then(response => {
             setGames(response.data.games)

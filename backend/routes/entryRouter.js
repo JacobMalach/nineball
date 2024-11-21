@@ -1,11 +1,11 @@
 const entryRouter = require('express').Router();
 let Entry = require('../models/entry');
 
-entryRouter.route('/:skip').get((req, res) => {
+app.get('/:skip', (req, res) => {
   var skip = parseInt(req.params.skip);
   Entry.find()
     .limit(6)
-    .sort({createdAt: -1})
+    .sort({ createdAt: -1 })
     .skip(skip)
     .then(entries => res.json(entries))
     .catch(err => res.status(400).json('Error: ' + err));
