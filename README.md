@@ -13,5 +13,4 @@ Note that you must run this both in the root and in the backend subdirectory to 
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.\
-
+Builds the app for production to the `build` folder.
